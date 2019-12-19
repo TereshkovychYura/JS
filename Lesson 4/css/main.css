@@ -1,0 +1,55 @@
+#main {
+  align-items: center;
+  display: inline-block;
+  font-family: "Teko", sans-serif;
+  padding-top: 60px;
+  width: 100%;
+  height: auto;
+
+  background: #3a6186; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to left,
+    #3a6186,
+    #89253e
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to left,
+    #3a6186,
+    #89253e
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: #fff;
+}
+.city {
+  color: black;
+  display: inline-block;
+  width: 500px;
+}
+.btnSearch {
+  color: black;
+  display: inline-block;
+}
+table {
+  width: 100%;
+  color: black;
+  background-color: #fff;
+  border-collapse: collapse;
+}
+td,
+th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #02a6e7;
+  color: white;
+}
+tr:hover {
+  background-color: #ddd;
+}
+.map {
+  height: 400px; /* The height is 400 pixels */
+  width: 100%; /* The width is the width of the web page */
+}
