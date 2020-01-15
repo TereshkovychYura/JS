@@ -15,20 +15,21 @@
 //   }
 // );
 
-Request();
+let business = document.querySelector("#Business");
+let sport = document.querySelector("#Sport");
+let science = document.querySelector("#Science");
+let entertainment = document.querySelector("#Entertainment");
 
-let business = document.querySelector(".Business");
-let sport = document.querySelector(".Sport");
-let science = document.querySelector(".Science");
-let entertainment = document.querySelector(".Entertainment");
+business.addEventListener("click", Request("Business"));
+sport.addEventListener("click", Request("Sport"));
+science.addEventListener("click", Request("Science"));
+entertainment.addEventListener("click", Request("Entertainment"));
 
-business.addEventListener("click", Request);
-sport.addEventListener("click", Request);
-science.addEventListener("click", Request);
-entertainment.addEventListener("click", Request);
+Request("Business");
 
-async function Request() {
-  let val = this.value;
+async function Request(cat) {
+  let elem = document.getElementById(`${cat}`);
+  let val = elem.getAttribute("value");
   let url = `https://newsapi.org/v2/top-headlines?country=ua&category=${val}&apiKey=18f1c87e444741aca30db0a569bba999`;
   var response = await fetch(url);
   var data = await response.json();
