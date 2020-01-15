@@ -15,7 +15,7 @@
 //   }
 // );
 
-GetNews(Request());
+Request();
 
 let business = document.querySelector(".Business");
 let sport = document.querySelector(".Sport");
@@ -28,17 +28,16 @@ science.addEventListener("click", Request);
 entertainment.addEventListener("click", Request);
 
 async function Request() {
-  let url =
-    "https://newsapi.org/v2/top-headlines?country=ua&category=business&apiKey=18f1c87e444741aca30db0a569bba999";
-
+  let val = this.value;
+  let url = `https://newsapi.org/v2/top-headlines?country=ua&category=${val}&apiKey=18f1c87e444741aca30db0a569bba999`;
   var response = await fetch(url);
   var data = await response.json();
   console.log(data);
-  return data;
+  GetNews(data);
 }
 function GetNews(data) {
-  var sport = document.querySelector("#business");
-  for (let i = 0; i < 5; i++) {
+  var sport = document.querySelector(".News");
+  for (let i = 0; i < 3; i++) {
     let h3 = document.createElement("h3");
     h3.className = "newsTitle";
     h3.innerHTML = data.articles[i].title;
