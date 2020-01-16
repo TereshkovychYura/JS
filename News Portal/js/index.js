@@ -19,13 +19,39 @@ let business = document.querySelector("#Business");
 let sport = document.querySelector("#Sport");
 let science = document.querySelector("#Science");
 let technology = document.querySelector("#Technology");
+let health = document.querySelector("#Health");
+let entertainment = document.querySelector("#Entertainment");
+
+let ua = document.querySelector("#ua");
+let uk = document.querySelector("#gb");
+let us = document.querySelector("#us");
+
+let currentCategoty = "business";
+let currnetCountry = "ua";
 
 business.addEventListener("click", ChangeCategoty);
 sport.addEventListener("click", ChangeCategoty);
 science.addEventListener("click", ChangeCategoty);
 technology.addEventListener("click", ChangeCategoty);
+health.addEventListener("click", ChangeCategoty);
+entertainment.addEventListener("click", ChangeCategoty);
+
+ua.addEventListener("click", ChangeCountry);
+uk.addEventListener("click", ChangeCountry);
+us.addEventListener("click", ChangeCountry);
 
 Request("Business");
+
+function ChangeCountry() {
+  let contr = this;
+  ua.classList.remove("selected");
+  uk.classList.remove("selected");
+  us.classList.remove("selected");
+
+  contr.setAttribute("class", "selected");
+  currnetCountry = contr.id;
+  Request(currentCategoty);
+}
 
 function ChangeCategoty() {
   let category = this;
@@ -33,10 +59,13 @@ function ChangeCategoty() {
   sport.classList.remove("active");
   science.classList.remove("active");
   technology.classList.remove("active");
+  health.classList.remove("active");
+  entertainment.classList.remove("active");
 
   category.setAttribute("class", "active");
   category = category.textContent.toLowerCase();
   category = category.trim();
+  currentCategoty = category;
   console.log(category);
 
   Request(category);
@@ -45,7 +74,7 @@ function ChangeCategoty() {
 async function Request(cat) {
   // let elem = document.getElementById(`${cat}`);
   // let val = elem.getAttribute("value");
-  let url = `https://newsapi.org/v2/top-headlines?country=ua&category=${cat}&apiKey=18f1c87e444741aca30db0a569bba999`;
+  let url = `https://newsapi.org/v2/top-headlines?country=${currnetCountry}&category=${cat}&apiKey=18f1c87e444741aca30db0a569bba999`;
   var response = await fetch(url);
   var data = await response.json();
   console.log(data);
