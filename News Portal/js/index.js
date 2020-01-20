@@ -40,6 +40,7 @@ ua.addEventListener("click", ChangeCountry);
 uk.addEventListener("click", ChangeCountry);
 us.addEventListener("click", ChangeCountry);
 
+WeatherRequest("Rivne,ua");
 Request("Business");
 
 function ChangeCountry() {
@@ -80,6 +81,13 @@ async function Request(cat) {
   console.log(data);
   GetNews(data);
 }
+async function WeatherRequest(city) {
+  let url = `https://samples.openweathermap.org/data/2.5/weather?q=${city}&appid=8afe1427d4e81cf9ae40a2f44c7a9ceb`;
+  var response = await fetch(url);
+  var data = await response.json();
+  console.log(data);
+}
+
 function GetNews(data) {
   let sport = document.querySelector("#news");
 
