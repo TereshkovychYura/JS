@@ -72,3 +72,16 @@ nav {
 .selected {
   background-color: #4f5d6e;
 }
+
+.searchInput {
+  width: 1000px;
+  height: 40px;
+  font-size: 30px;
+}
+.searchButton {
+  background-color: aquamarine;
+  padding: 13px;
+  width: 100px;
+}
+.weatherCountry {
+}

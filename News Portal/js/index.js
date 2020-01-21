@@ -40,7 +40,7 @@ ua.addEventListener("click", ChangeCountry);
 uk.addEventListener("click", ChangeCountry);
 us.addEventListener("click", ChangeCountry);
 
-WeatherRequest("Rivne,ua");
+WeatherRequest("Rivne");
 Request("Business");
 
 function ChangeCountry() {
@@ -82,10 +82,11 @@ async function Request(cat) {
   GetNews(data);
 }
 async function WeatherRequest(city) {
-  let url = `https://samples.openweathermap.org/data/2.5/weather?q=${city}&appid=8afe1427d4e81cf9ae40a2f44c7a9ceb`;
+  let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=8afe1427d4e81cf9ae40a2f44c7a9ceb`;
   var response = await fetch(url);
   var data = await response.json();
   console.log(data);
+  GetWeather(data);
 }
 
 function GetNews(data) {
@@ -123,4 +124,32 @@ function GetNews(data) {
     author.innerHTML = data.articles[i].author;
     wrapper.appendChild(author);
   }
+}
+
+function GetWeather(data) {
+  let weather = document.querySelector("#weather");
+  let wrapperChack = document.querySelector(".weatherwrapper");
+  if (wrapperChack != null) {
+    weather.removeChild(wrapperChack);
+  }
+
+  let wrapper = document.createElement("div");
+  wrapper.setAttribute("class", "weatherwrapper");
+  weather.appendChild(wrapper);
+  let input = document.createElement("input");
+  let searchButton = document.createElement("a");
+
+  input.className = "searchInput";
+
+  searchButton.className = "searchButton";
+  searchButton.textContent = "Search";
+  searchButton.href = "";
+
+  wrapper.appendChild(input);
+  wrapper.appendChild(searchButton);
+
+  let h2 = document.createElement("h2");
+  h2.className = "weatherCountry";
+  h2.innerHTML = data.name;
+  wrapper.appendChild(h2);
 }
