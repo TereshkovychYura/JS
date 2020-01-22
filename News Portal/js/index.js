@@ -1,20 +1,3 @@
-// $("ul.nav li.dropdown").hover(
-//   function() {
-//     $(this)
-//       .find(".dropdown-menu")
-//       .stop(true, true)
-//       .delay(200)
-//       .fadeIn(500);
-//   },
-//   function() {
-//     $(this)
-//       .find(".dropdown-menu")
-//       .stop(true, true)
-//       .delay(200)
-//       .fadeOut(500);
-//   }
-// );
-
 let business = document.querySelector("#Business");
 let sport = document.querySelector("#Sport");
 let science = document.querySelector("#Science");
@@ -25,6 +8,9 @@ let entertainment = document.querySelector("#Entertainment");
 let ua = document.querySelector("#ua");
 let uk = document.querySelector("#gb");
 let us = document.querySelector("#us");
+
+let searchButton = document.querySelector(".searchButton");
+searchButton.addEventListener("click", SearchWeather);
 
 let currentCategoty = "business";
 let currnetCountry = "ua";
@@ -54,6 +40,13 @@ function ChangeCountry() {
   Request(currentCategoty);
 }
 
+function SearchWeather() {
+  let inputValue = document.querySelector(".searchInput").value;
+  if (inputValue != "") {
+    WeatherRequest(inputValue);
+  }
+}
+
 function ChangeCategoty() {
   let category = this;
   business.classList.remove("active");
@@ -75,7 +68,7 @@ function ChangeCategoty() {
 async function Request(cat) {
   // let elem = document.getElementById(`${cat}`);
   // let val = elem.getAttribute("value");
-  let url = `https://newsapi.org/v2/top-headlines?country=${currnetCountry}&category=${cat}&apiKey=18f1c87e444741aca30db0a569bba999`;
+  let url = `https://newsapi.org/v2/top-headlines?country=${currnetCountry}&category=${cat}&apiKey=1672043ef0e34c7cb1cb038b25310ebe`;
   var response = await fetch(url);
   var data = await response.json();
   console.log(data);
@@ -101,28 +94,35 @@ function GetNews(data) {
   wrapper.setAttribute("class", "wrapper");
   sport.appendChild(wrapper);
 
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 6; i++) {
+    let newsBlock = document.createElement("div");
+    newsBlock.className = "blockNews col-md-4";
+    wrapper.appendChild(newsBlock);
     let h3 = document.createElement("h3");
     h3.className = "newsTitle";
     h3.innerHTML = data.articles[i].title;
-    wrapper.appendChild(h3);
+    newsBlock.appendChild(h3);
     let img = document.createElement("img");
-    img.className = "newsImg";
+    img.className = "newsImage";
     img.setAttribute("alt", "Image");
     img.setAttribute("src", data.articles[i].urlToImage);
-    wrapper.appendChild(img);
+    img.onerror = function() {
+      this.src = "https://pokrovsk.news/i/news.svg";
+    };
+
+    newsBlock.appendChild(img);
     let desc = document.createElement("div");
     desc.className = "newsArticle";
     desc.innerHTML = data.articles[i].description;
-    wrapper.appendChild(desc);
+    newsBlock.appendChild(desc);
     let date = document.createElement("span");
     date.className = "newsPublishedAt";
     date.innerHTML = data.articles[i].publishedAt;
-    wrapper.appendChild(date);
+    newsBlock.appendChild(date);
     let author = document.createElement("span");
     author.className = "newsAuthor";
     author.innerHTML = data.articles[i].author;
-    wrapper.appendChild(author);
+    newsBlock.appendChild(author);
   }
 }
 
@@ -136,20 +136,19 @@ function GetWeather(data) {
   let wrapper = document.createElement("div");
   wrapper.setAttribute("class", "weatherwrapper");
   weather.appendChild(wrapper);
-  let input = document.createElement("input");
-  let searchButton = document.createElement("a");
 
-  input.className = "searchInput";
+  let weatherBlock = document.createElement("div");
+  weatherBlock.className = "blockWeather col-md-4";
+  wrapper.appendChild(weatherBlock);
 
-  searchButton.className = "searchButton";
-  searchButton.textContent = "Search";
-  searchButton.href = "";
+  let cityName = document.createElement("h3");
+  cityName.textContent = data.name;
+  weatherBlock.appendChild(cityName);
 
-  wrapper.appendChild(input);
-  wrapper.appendChild(searchButton);
+  let weatherUl = document.createElement("ul");
+  weatherBlock.appendChild(weatherUl);
 
-  let h2 = document.createElement("h2");
-  h2.className = "weatherCountry";
-  h2.innerHTML = data.name;
-  wrapper.appendChild(h2);
+  let tempLi = document.createElement("li");
+  tempLi.textContent = "Temperature: " + data.main.temp;
+  weatherUl.appendChild(tempLi);
 }
